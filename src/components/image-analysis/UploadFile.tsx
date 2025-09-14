@@ -46,13 +46,13 @@ const removeUploadedImage = ()=> {
   setUploadedImage(null)
 }
   return (
-    <div className='w-full'>
-      <label className='text-sm font-medium' >Upload Image</label>
+    <div className='w-full '>
+      <label className='text-sm font-medium text-zinc-600 ' >Upload Image reference</label>
       {uploadedImage ? (
-        <div className='relative border-1 border-gray-500  rounded-lg p-2'>
+        <div className='relative border-2 border-dashed border-green-300  rounded-lg p-2 my-2'>
           <div className='relative'>
-            <img src={uploadedImage || "placeholder.svg"} alt='Uploaded' className='w-full h-48 object-cover rounded-lg'/>
-            <button onClick={removeUploadedImage} className='absolute top-2 right-2 p-1 rounded-full bg-red-600 text-white'>
+            <img src={uploadedImage || "placeholder.svg"} alt='Uploaded' className='w-full h-52 object-cover rounded-lg'/>
+            <button onClick={removeUploadedImage} className='absolute top-2 right-2 p-1 rounded-full bg-red-600 text-white cursor-pointer'>
               <X size={14}/>
             </button>
           </div>

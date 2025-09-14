@@ -1,12 +1,13 @@
-"use client"
+"use client";
 import { ApiStatus } from "@/components/api-status";
 import InputPrompt from "@/components/image-analysis/InputPrompt";
 import LoadingState from "@/components/image-analysis/LoadingState";
 import UploadFile from "@/components/image-analysis/UploadFile";
 import { analyzeImageWithGemini } from "@/lib/nano-banana";
+import { X } from "lucide-react";
 import { useState } from "react";
 
-export default function Home() {
+export default function ImageAnalysis() {
   const [originalImage, setOriginalImage] = useState<string | null>(null);
   const [analysisResult, setAnalysisResult] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -55,20 +56,25 @@ export default function Home() {
     setError(null);
   };
   return (
-    <div className="min-h-screen ">
-      <div className="container max-w-6xl mx-auto py-12">
-        <div className="text-center pt-8">
-          <h2 className="text-2xl font-semibold">AI Image analyzer</h2>
-          <p className="text-gray-700">
-            Get detailed editing instructions for your images using Google
-            Gemini AI
-          </p>
-          <div className="flex justify-center">
+    <div className="flex-1">
+      <div className="grid grid-cols-1 md:grid-cols-2 ">
+        <div className="p-4">
+          <div className="flex items-center justify-between gap-2 pb-2 mb-2 border-b border-zinc-200">
+            <div className="flex items-center justify-between gap-2">
+              <img
+                width="30"
+                height="30"
+                src="https://img.icons8.com/3d-fluency/94/notepad.png"
+                alt="notepad"
+              />
+              <div>
+                <h2 className="font-semibold">Prompt Generator</h2>
+                <p className="text-xs text-zinc-500">Generate Prompts for Worldbuilding</p>
+              </div>
+            </div>
             <ApiStatus onStatusChange={setApiReady} />
           </div>
-        </div>
-        {/* tools grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 mt-16 gap-6">
+
           <div className="space-y-6">
             <UploadFile onImageUpload={handleImageUpload} />
             <InputPrompt
@@ -93,19 +99,23 @@ export default function Home() {
               <button
                 onClick={handleAnalyzeImage}
                 disabled={isLoading || !originalImage || !prompt.trim()}
-                className="flex-1 px-6 py-2 rounded-lg bg-emerald-800 text-white font-medium disabled:cursor-not-allowed disabled:opacity-50"
+                className=" button-analyze flex-1 px-6 py-2 rounded-lg bg-emerald-800 text-white font-medium disabled:cursor-not-allowed disabled:opacity-50"
               >
                 {isLoading ? "Analyzing..." : "Analyze Image"}
               </button>
               <button
                 onClick={handleReset}
                 disabled={isLoading}
-                className="px-6 py-2 rounded-lg bg-gray-900 text-white font-medium disabled:cursor-not-allowed disabled:opacity-50"
+                className="px-6 flex items-center justify-between gap-2 border border-zinc-300 hover:border-zinc-500 text-zinc-500 hover:text-zinc-700 text-sm py-2 cursor-pointer rounded-lg  disabled:cursor-not-allowed disabled:opacity-50"
               >
-                Reset
+                <X size={16}/> Reset
               </button>
             </div>
           </div>
+        </div>
+
+        {/* tools grid */}
+        <div className="border-l border-zinc-200 p-2">
           <div className="">
             {isLoading ? (
               <LoadingState />
