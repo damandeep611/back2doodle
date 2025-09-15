@@ -56,9 +56,9 @@ export default function ImageAnalysis() {
     setError(null);
   };
   return (
-    <div className="flex-1">
-      <div className="grid grid-cols-1 md:grid-cols-2 ">
-        <div className="p-4">
+    <div className="flex-1 relative">
+      <div className=" relative grid grid-cols-1 md:grid-cols-[40%_60%] ">
+        <div className="p-4 sticky top-0 h-screen">
           <div className="flex items-center justify-between gap-2 pb-2 mb-2 border-b border-zinc-200">
             <div className="flex items-center justify-between gap-2">
               <img
@@ -69,7 +69,9 @@ export default function ImageAnalysis() {
               />
               <div>
                 <h2 className="font-semibold">Prompt Generator</h2>
-                <p className="text-xs text-zinc-500">Generate Prompts for Worldbuilding</p>
+                <p className="text-xs text-zinc-500">
+                  Generate Prompts and analyze images{" "}
+                </p>
               </div>
             </div>
             <ApiStatus onStatusChange={setApiReady} />
@@ -108,14 +110,14 @@ export default function ImageAnalysis() {
                 disabled={isLoading}
                 className="px-6 flex items-center justify-between gap-2 border border-zinc-300 hover:border-zinc-500 text-zinc-500 hover:text-zinc-700 text-sm py-2 cursor-pointer rounded-lg  disabled:cursor-not-allowed disabled:opacity-50"
               >
-                <X size={16}/> Reset
+                <X size={16} /> Reset
               </button>
             </div>
           </div>
         </div>
 
-        {/* tools grid */}
-        <div className="border-l border-zinc-200 p-2">
+        {/*--------------------------------------- Outputr result from image analysis------------------- */}
+        <div className="border-l overflow-y-auto h-screen border-zinc-200 p-2">
           <div className="">
             {isLoading ? (
               <LoadingState />
@@ -130,7 +132,7 @@ export default function ImageAnalysis() {
                     />
                   )}
                 </div>
-                <div className="p-4 border border-gray-500 rounded-lg">
+                <div className="p-4 border border-gray-300 rounded-md">
                   <h3 className="font-medium mb-2">
                     AI Analysis & editing instructions
                   </h3>

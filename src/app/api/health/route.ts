@@ -29,9 +29,13 @@ export async function GET() {
       }
     } catch (apiError) {
       return NextResponse.json(
-        { error: "Failed to connect to Gemini API. Please check your API key and internet connection." },
-        { status: 500 },
-      )
+        {
+          error:
+            "Failed to connect to Gemini API. Please check your API key and internet connection.",
+          apiError,
+        },
+        { status: 500 }
+      );
     }
 
     return NextResponse.json({

@@ -13,8 +13,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "sketch",
+  title: "back2doodle",
   description: "Image to sketch drawing app",
+  icons: "/drawing.png",
 };
 
 export default function RootLayout({

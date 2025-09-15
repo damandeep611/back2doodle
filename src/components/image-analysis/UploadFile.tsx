@@ -46,39 +46,60 @@ const removeUploadedImage = ()=> {
   setUploadedImage(null)
 }
   return (
-    <div className='w-full '>
-      <label className='text-sm font-medium text-zinc-600 ' >Upload Image reference</label>
+    <div className="w-full ">
+      <label className="text-sm font-medium text-zinc-700 ">Upload Image</label>
       {uploadedImage ? (
-        <div className='relative border-2 border-dashed border-green-300  rounded-lg p-2 my-2'>
-          <div className='relative'>
-            <img src={uploadedImage || "placeholder.svg"} alt='Uploaded' className='w-full h-52 object-cover rounded-lg'/>
-            <button onClick={removeUploadedImage} className='absolute top-2 right-2 p-1 rounded-full bg-red-600 text-white cursor-pointer'>
-              <X size={14}/>
+        <div className="relative border-2 border-dashed border-green-300  rounded-lg p-2 my-2">
+          <div className="relative">
+            <img
+              src={uploadedImage || "placeholder.svg"}
+              alt="Uploaded"
+              className="w-full h-52 object-cover rounded-lg"
+            />
+            <button
+              onClick={removeUploadedImage}
+              className="absolute top-2 right-2 p-1 rounded-full bg-red-600 text-white cursor-pointer"
+            >
+              <X size={14} />
             </button>
           </div>
-          <p className='text-sm mt-2 text-center'>Image uploaded successfully</p>
+          <p className="text-sm mt-2 text-center">
+            Image uploaded successfully
+          </p>
         </div>
-      ): (
-        <div className={`relative border-2 border-dashed rounded-lg p-8 text-center cursor-pointer`} onClick={()=> document.getElementById("file-input")?.click()}>
-          <input type="file" accept='image/*' onChange={handleInputChange} className='absolute inset-0 w-full h-full opacity-0 cursor-pointer' />
-          <div className='flex flex-col items-center space-y-4'>
-            <div className='p-4 rounded-full'>
-              {dragActive ? (<Upload size={14}/>) : (<ImageIcon size={14}/>)}
+      ) : (
+        <div
+          className={`relative border-2 border-dashed border-gray-300 hover:border-gray-500 rounded-lg p-8 text-center cursor-pointer`}
+          onClick={() => document.getElementById("file-input")?.click()}
+        >
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleInputChange}
+            className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+          />
+          <div className="flex flex-col items-center space-y-4">
+            <div className="p-4 rounded-full">
+              {dragActive ? <Upload size={14} /> : <ImageIcon size={14} />}
             </div>
-            <div className='space-y-2'>
-              <p className='text-lg font-medium '>
+            <div className="space-y-2">
+              <p className="text-lg font-medium text-zinc-500">
                 {dragActive ? "Drop your image here" : "Upload an image"}
               </p>
-              <p className='text-sm'>
-                Drag and drop or click to browse <br /> Supports JPG, PNG, WebP (max10mb)
+              <p className="text-sm text-zinc-400">
+                Drag and drop or click to browse <br /> Supports JPG, PNG, WebP
+                (max10mb)
               </p>
             </div>
-            <button type='button' className=' bg-emerald-700 text-white hover:bg-emerald-900 px-4 py-2 rounded-md font-medium '>
+            <button
+              type="button"
+              className=" bg-blue-500 text-white hover:bg-emerald-900 px-4 py-1 rounded-md font-medium "
+            >
               Choose File
             </button>
           </div>
         </div>
       )}
     </div>
-  )
+  );
 }

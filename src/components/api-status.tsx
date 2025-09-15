@@ -37,7 +37,7 @@ export function ApiStatus({ onStatusChange }: ApiStatusProps) {
       }
     } catch (error) {
       setStatus("error")
-      setErrorMessage("Failed to connect to API")
+      setErrorMessage(`Failed to connect to API ${error}`);
       onStatusChange?.(false)
     }
   }
