@@ -1,148 +1,67 @@
 "use client"
-import { ApiStatus } from "@/components/api-status";
-import InputPrompt from "@/components/image-analysis/InputPrompt";
-import LoadingState from "@/components/image-analysis/LoadingState";
-import UploadFile from "@/components/image-analysis/UploadFile";
-import { analyzeImageWithGemini } from "@/lib/nano-banana";
-import { useState } from "react";
+import React from "react";
+import { motion } from "framer-motion";
+import HeroGallery from "@/components/Landing/HeroGallery";
+import { ArrowUpRight } from "lucide-react";
+import Navigation from "@/components/Landing/Navigation";
+
+const herochips = ["Abstract", "3D", "Realism", "Human", "Environment"];
 
 export default function Home() {
-  const [originalImage, setOriginalImage] = useState<string | null>(null);
-  const [analysisResult, setAnalysisResult] = useState<string | null>(null);
-  const [error, setError] = useState<string | null>(null);
-  const [prompt, setPrompt] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const [apiReady, setApiReady] = useState(false);
-
-  const handleImageUpload = (imageUrl: string) => {
-    setOriginalImage(imageUrl);
-    setAnalysisResult(null);
-    setError(null);
-  };
-
-  const handleAnalyzeImage = async () => {
-    if (!originalImage || !prompt.trim()) {
-      setError("Please upload an image and enter a prompt");
-      return;
-    }
-    if (!apiReady) {
-      setError("API is not ready. Please check your configuration");
-      return;
-    }
-    setIsLoading(true);
-    setError(null);
-    try {
-      const analysis = await analyzeImageWithGemini(
-        originalImage,
-        prompt.trim()
-      );
-      setAnalysisResult(analysis);
-    } catch (err) {
-      const errorMessage =
-        err instanceof Error
-          ? err.message
-          : "Failed to analyze image. Please try again.";
-      setError(errorMessage);
-      console.error("Image analysis error:", err);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-  const handleReset = () => {
-    setOriginalImage(null);
-    setAnalysisResult(null);
-    setPrompt("");
-    setError(null);
-  };
   return (
-    <div className="min-h-screen ">
-      <div className="container max-w-6xl mx-auto py-12">
-        <div className="text-center pt-8">
-          <h2 className="text-2xl font-semibold">AI Image analyzer</h2>
-          <p className="text-gray-700">
-            Get detailed editing instructions for your images using Google
-            Gemini AI
+    <div className="px-4 md:px-12 mb-16 ">
+      <Navigation />
+      {/* hero section  */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 pt-8 md:pt-20 p-2 md:p-8 ">
+        <h2 className=" text-4xl md:text-7xl font-medium">
+          From Thought <br className="hidden md:block" /> to Masterpiece
+        </h2>
+        <div className=" space-y-4 px-0 md:px-16">
+          <p className="text-zinc-700 text-sm md:text-base">
+            Craft high quality images from nothing but words. Our AI transforms
+            your ideas into breathtaking visuals - Whether for Art, Design ,
+            Storytelling or Pure Inspirations.
           </p>
-          <div className="flex justify-center">
-            <ApiStatus onStatusChange={setApiReady} />
-          </div>
-        </div>
-        {/* tools grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 mt-16 gap-6">
-          <div className="space-y-6">
-            <UploadFile onImageUpload={handleImageUpload} />
-            <InputPrompt
-              value={prompt}
-              onChange={setPrompt}
-              onSubmit={handleAnalyzeImage}
-              disabled={isLoading || !originalImage || !apiReady}
-            />
-            {/* to show api error */}
-            {error && (
-              <div>
-                <p className="text-sm">{error}</p>
-                {error.includes("GEMINI_API_KEY") && (
-                  <div>
-                    <p>setup api key first</p>
-                  </div>
-                )}
-              </div>
-            )}
-            {/* analyze button and reset button */}
-            <div className="flex gap-3">
-              <button
-                onClick={handleAnalyzeImage}
-                disabled={isLoading || !originalImage || !prompt.trim()}
-                className="flex-1 px-6 py-2 rounded-lg bg-emerald-800 text-white font-medium disabled:cursor-not-allowed disabled:opacity-50"
-              >
-                {isLoading ? "Analyzing..." : "Analyze Image"}
-              </button>
-              <button
-                onClick={handleReset}
-                disabled={isLoading}
-                className="px-6 py-2 rounded-lg bg-gray-900 text-white font-medium disabled:cursor-not-allowed disabled:opacity-50"
-              >
-                Reset
-              </button>
-            </div>
-          </div>
-          <div className="">
-            {isLoading ? (
-              <LoadingState />
-            ) : analysisResult ? (
-              <div className="space-y-4">
-                <div className="aspect-video rounded-lg overflow-hidden">
-                  {originalImage && (
-                    <img
-                      src={originalImage || "placeholder.svg"}
-                      alt="Original uploaded image"
-                      className="w-full h-full object-contain"
-                    />
-                  )}
-                </div>
-                <div className="p-4 border border-gray-500 rounded-lg">
-                  <h3 className="font-medium mb-2">
-                    AI Analysis & editing instructions
-                  </h3>
-                  <div className="text-sm whitespace-pre-wrap">
-                    {analysisResult}
-                  </div>
-                </div>
-              </div>
-            ) : (
-              originalImage && (
-                <div className="aspect-video rounded-lg overflow-hidden ">
-                  <img
-                    src={originalImage || "/placeholder.svg"}
-                    alt="Original"
-                    className="w-full h-full object-contain"
-                  />
-                </div>
-              )
-            )}
+          <div className="flex items-center justify-start gap-4 ">
+            <button className="flex items-center justify-between gap-2 bg-zinc-950 text-white py-2 md:py-3 px-6 md:px-8 rounded-full text-sm md:text-base font-medium">
+              Try for Free <ArrowUpRight size={16} />
+            </button>
+            <button className="flex items-center justify-between gap-2 border border-zinc-400 py-2 md:py-3 px-6 md:px-8 rounded-full text-sm md:text-base font-medium">
+              Demo <ArrowUpRight size={16} />
+            </button>
           </div>
         </div>
       </div>
+      {/* chip tags on hero */}
+      <div className=" p-8 hidden md:flex gap-4 items-center justify-between">
+        <div className=" space-x-4 ">
+          {herochips.map((chip, index) => (
+            <span
+              key={index}
+              className="px-2 md:px-4 py-1 md:py-2 text-xs md:text-base rounded-full border border-zinc-500 hover:bg-zinc-950 hover:text-white"
+            >
+              {chip}
+            </span>
+          ))}
+        </div>
+        <motion.div
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 1, delay: 0.8 }}
+          className="w-full h-[1px] bg-zinc-500  mx-4"
+        />
+        <div className=" space-x-4 ">
+          <span className="px-2 md:px-4 py-1 md:py-2 text-xs md:text-base rounded-full border border-zinc-500 hover:bg-zinc-950 hover:text-white">
+            Nature
+          </span>
+          <span className="px-2 md:px-4 py-1 md:py-2 text-xs md:text-base rounded-full border border-zinc-500 hover:bg-zinc-950 hover:text-white">
+            Vehicles
+          </span>
+        </div>
+      </div>
+
+      {/* image gallery */}
+      <HeroGallery />
     </div>
   );
 }
