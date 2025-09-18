@@ -1,12 +1,10 @@
 import ImageAnalysis from '@/components/image-analysis/image-analysis'
-import React from 'react'
-import Sidebar from './Sidebar'
+import React from "react";
 
 export default function DashbordPage() {
   return (
-    <div className='flex min-h-screen '>
-      <Sidebar/>
-      <ImageAnalysis/>
+    <div className=" ">
+      <ImageAnalysis />
     </div>
-  )
+  );
 }

@@ -2,10 +2,10 @@
 import {
   ChevronDown,
   DatabaseZap,
+  FlaskConical,
   HelpCircleIcon,
   LayoutDashboard,
   LayoutTemplate,
-  Library,
   LucideIcon,
   PanelRightOpen,
   PictureInPicture,
@@ -16,6 +16,7 @@ import Link from "next/link";
 import React from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 
 interface SidebarTypes {
   icon: LucideIcon;
@@ -24,17 +25,22 @@ interface SidebarTypes {
 }
 
 const SidebarItems: SidebarTypes[] = [
-  { icon: LayoutDashboard, title: "Dashboard", href: "/" },
-  { icon: PictureInPicture, title: "Image Generator", href: "/dashboard" },
+  { icon: LayoutDashboard, title: "Dashboard", href: "/dashboard" },
+  {
+    icon: PictureInPicture,
+    title: "Image Generator",
+    href: "/dashboard/image-generator",
+  },
   { icon: DatabaseZap, title: "Prompts base", href: "/promptbase" },
   { icon: LayoutTemplate, title: "Templates", href: "/templates" },
-  { icon: Settings, title: "Settings", href: "/settings" },
+  { icon: Settings, title: "Settings", href: "/dashboard/setting" },
   { icon: HelpCircleIcon, title: "Help", href: "/help" },
 ];
 
 export default function Sidebar() {
+  const pathname = usePathname();
   return (
-    <div className="w-[256px] flex flex-col   p-4 border-r border-gray-200 h-screen  top-0 sticky overflow-y-auto">
+    <div className="w-[256px] flex flex-col relative   p-4 border-r border-gray-200 h-screen  top-0  overflow-y-auto">
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center justify-between gap-2">
           <Image
@@ -63,22 +69,33 @@ export default function Sidebar() {
       <motion.button
         whileHover={{ scale: 1.02 }}
         whileTap={{ scale: 0.98 }}
-        className="w-full bg-blue-600 text-white py-2 px-4 rounded-lg flex items-center justify-center gap-2 font-medium hover:bg-blue-700 transition-colors"
+        className="w-full bg-blue-200 text-blue-500 py-2 px-4 rounded-2xl flex items-center justify-center gap-2 text-sm font-medium hover:bg-blue-700 transition-colors"
       >
-        <Library size={16} />
-        Prompt Libraries
+        <FlaskConical size={16} />
+        Credits: 250
       </motion.button>
-      <div className="flex-1 flex flex-col  items-start  gap-2 py-6">
-        {SidebarItems.map((item) => (
-          <Link
-            href={item.href}
-            key={item.href}
-            className="flex items-center gap-2 text-zinc-600 hover:bg-gray-100 w-full p-2 rounded-md"
-          >
-            <item.icon size={16} className="text-gray-900" />
-            <span className="text-sm  font-medium">{item.title}</span>
-          </Link>
-        ))}
+      <span className="text-sm text-zinc-500 pt-6 p-2">Menu</span>
+      <div className="flex-1 flex flex-col  items-start  gap-2 py-2">
+        {SidebarItems.map((item) => {
+          const isActive = pathname === item.href;
+          return (
+            <Link
+              href={item.href}
+              key={item.href}
+              className={`flex items-center gap-2  w-full p-2 rounded-sm ${
+                isActive
+                  ? "bg-blue-100 text-blue-500 border-l-2 border-blue-500"
+                  : "text-zinc-600 hover:bg-gray-100"
+              }`}
+            >
+              <item.icon
+                size={16}
+                className={isActive ? "text-blue-500" : "text-gray-900"}
+              />
+              <span className="text-sm  font-medium">{item.title}</span>
+            </Link>
+          );
+        })}
       </div>
 
       {/* User Profile */}

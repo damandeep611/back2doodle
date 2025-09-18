@@ -1,6 +1,5 @@
 "use client"
-import { MenuIcon } from 'lucide-react';
-import Image from 'next/image';
+import { MenuIcon } from "lucide-react";
 import Link from 'next/link';
 import React from 'react'
 
